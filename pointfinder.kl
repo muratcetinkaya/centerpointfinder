@@ -1,0 +1,57 @@
+PROGRAM pointfinder
+
+VAR
+x1,x2,x3,y1,y2,y3 :REAL
+
+a1,a2,a3,b1,b2,b3 :STRING[15]
+
+d,df,dg,g,f,cpx,cpy :REAL
+
+
+real_value:REAL	
+r_flg :BOOLEAN
+i_val :INTEGER
+max_iter,i ,STATUS: INTEGER
+int_value:INTEGER
+
+
+BEGIN
+GET_STR_REG(14, a1, STATUS)
+GET_STR_REG(15, b1, STATUS)
+GET_STR_REG(16, a2, STATUS)
+GET_STR_REG(17, b2, STATUS)
+GET_STR_REG(18, a3, STATUS)
+GET_STR_REG(19, b3, STATUS)
+
+CNV_STR_REAL(a1, x1)
+CNV_STR_REAL(b1, y1)
+CNV_STR_REAL(a2, x2)
+CNV_STR_REAL(b2, y2)
+CNV_STR_REAL(a3, x3)
+CNV_STR_REAL(b3, y3)
+
+
+SET_REAL_REG(25,x1,STATUS)
+
+d=  (((4*x1*y2) + (4*y1*x3) + (4*x2*y3)) - ((4*x3*y2) + (4*y3*x1) + (4*x2*y1)));
+
+dg= (((((-1)*((x1*x1)+(y1*y1)))*(2*y2)) + (((-1)*((x3*x3)+(y3*y3)))*(2*y1)) + (((-1)*((x2*x2)+(y2*y2)))*(2*y3))) - ((((-1)*((x3*x3)+(y3*y3)))*(2*y2)) + (((-1)*((x1*x1)+(y1*y1)))*(2*y3)) + (((-1)*((x2*x2)+(y2*y2)))*(2*y1))));
+
+df= (((((-1)*((x2*x2)+(y2*y2)))*(2*x1)) + (((-1)*((x1*x1)+(y1*y1)))*(2*x3)) + (((-1)*((x3*x3)+(y3*y3)))*(2*x2))) - ((((-1)*((x2*x2)+(y2*y2)))*(2*x3)) + (((-1)*((x3*x3)+(y3*y3)))*(2*x1)) + (((-1)*((x1*x1)+(y1*y1)))*(2*x2))));
+
+
+g = ((dg) / (d));
+
+f = ((df) / (d));
+
+
+cpx = -g 
+
+cpy = -f  
+
+
+
+SET_REAL_REG(20,cpx,STATUS)
+SET_REAL_REG(21,cpy,STATUS)
+
+END pointfinder
